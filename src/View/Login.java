@@ -15,15 +15,13 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
            int width = 820;
-        int height = 530;
+           int height = 530;
 
             setPreferredSize(new Dimension(width, height));
-        setMinimumSize(new Dimension(width, height)); // الحد الأدنى
-        setMaximumSize(new Dimension(width, height)); // الحد الأقصى (اختياري)
+            setMinimumSize(new Dimension(width, height));
+            setMaximumSize(new Dimension(width, height)); 
 
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+           
     }
 
  
@@ -69,7 +67,7 @@ public class Login extends javax.swing.JFrame {
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                .addGap(0, 81, Short.MAX_VALUE)
+                .addGap(0, 76, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(40, 40, 40))
             .addGroup(RightLayout.createSequentialGroup()
@@ -89,7 +87,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(78, 78, 78))
         );
@@ -173,13 +171,13 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(20, 20, 20)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(26, 26, 26)
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jButton2))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jPanel1.add(Left);
@@ -218,25 +216,30 @@ public class Login extends javax.swing.JFrame {
                     String email = EmailInput.getText().trim();
                     String password = PasswordInput.getText().trim();
 
-                    String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+                    if(!email.isEmpty() && !password.isEmpty()){
+                        
 
-                    if (!email.matches(emailRegex)) {
-                        JOptionPane.showMessageDialog(this, " Please enter a valid email address.", "Invalid Email", JOptionPane.WARNING_MESSAGE);
-                    } else if (password.isEmpty() || password.length() < 4) {
-                        JOptionPane.showMessageDialog(this, "Password must be at least 4 characters.", "Invalid Password", JOptionPane.WARNING_MESSAGE);
-                    } else {
-//                        Create Class include email and password to passing at Login method for Easy
-                        User LoginUser = User.create(email, password);
+                        if (password.isEmpty() || password.length() < 4) {
+                                JOptionPane.showMessageDialog(this, "Password must be at least 4 characters.", "Invalid Password", JOptionPane.WARNING_MESSAGE);
+                            }
+                        else {
+            //                        Create Class include email and password to passing at Login method for Easy
+                                    User LoginUser = User.create(email, password);
 
-                        boolean isLogged = UserService.Login(LoginUser.Email, LoginUser.Password);
+                                    boolean isLogged = UserService.Login(LoginUser.Email, LoginUser.Password);
 
-                        if (isLogged) {
-                            JOptionPane.showMessageDialog(this, " Logged in successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(this, " Invalid email or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                        }
+                                    if (isLogged) {
+            //                            Success Login User 
+                                            this.dispose();
+
+                                    } 
+                                    this.dispose();
+
+                            }
                     }
-
+                    else{
+                        JOptionPane.showMessageDialog(this, "Required Enter Information in Field!","Error",JOptionPane.ERROR_MESSAGE);
+                    }
 
    
       
