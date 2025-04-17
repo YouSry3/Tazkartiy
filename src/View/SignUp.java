@@ -3,6 +3,10 @@ package View;
 
 import Controller.UserService;
 import Objects.User;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -13,7 +17,16 @@ public class SignUp extends javax.swing.JFrame {
  
     public SignUp() {
         initComponents();
-         
+           int width = 820;
+        int height = 530;
+
+            setPreferredSize(new Dimension(width, height));
+        setMinimumSize(new Dimension(width, height)); // الحد الأدنى
+        setMaximumSize(new Dimension(width, height)); // الحد الأقصى (اختياري)
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
      public JTextField getUsernameField() {
         return FullNameInput;
@@ -229,12 +242,27 @@ public class SignUp extends javax.swing.JFrame {
         
         
 //       User user = new User(  FullNameInput.getText(),EmailInput.getText(),PasswordInput.getText());
-                  
-     User NewUser =  User.create(  FullNameInput.getText(),EmailInput.getText(),PasswordInput.getText());
-     
-       UserService.registerUser(NewUser);
-     ClearAllInput();
-       
+ String fullName = FullNameInput.getText().trim();
+String email = EmailInput.getText().trim();
+String password = PasswordInput.getText().trim();
+
+// Regular expression to validate email format
+String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+// Checks
+if (fullName.isEmpty() || fullName.length() < 3) {
+    JOptionPane.showMessageDialog(this, "❌ Full name must be at least 3 characters.", "Invalid Name", JOptionPane.WARNING_MESSAGE);
+} else if (!email.matches(emailRegex)) {
+    JOptionPane.showMessageDialog(this, "❌ Please enter a valid email address.", "Invalid Email", JOptionPane.WARNING_MESSAGE);
+} else if (password.length() < 4) {
+    JOptionPane.showMessageDialog(this, "❌ Password must be at least 4 characters.", "Invalid Password", JOptionPane.WARNING_MESSAGE);
+} else {
+    User NewUser = User.create(fullName, email, password);
+    UserService.registerUser(NewUser);
+    ClearAllInput();
+}
+
+
         
     }//GEN-LAST:event_SigUpUserActionPerformed
 

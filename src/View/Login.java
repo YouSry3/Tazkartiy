@@ -3,6 +3,9 @@ package View;
 
 import Controller.UserService;
 import Objects.User;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
@@ -11,6 +14,16 @@ public class Login extends javax.swing.JFrame {
   
     public Login() {
         initComponents();
+           int width = 820;
+        int height = 530;
+
+            setPreferredSize(new Dimension(width, height));
+        setMinimumSize(new Dimension(width, height)); // الحد الأدنى
+        setMaximumSize(new Dimension(width, height)); // الحد الأقصى (اختياري)
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
  
@@ -202,8 +215,30 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        
-      User LoginUser  =   User.create(EmailInput.getText(), PasswordInput.getText());
-      UserService.Login(LoginUser.Email,LoginUser.Password);
+                    String email = EmailInput.getText().trim();
+                    String password = PasswordInput.getText().trim();
+
+                    String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+                    if (!email.matches(emailRegex)) {
+                        JOptionPane.showMessageDialog(this, " Please enter a valid email address.", "Invalid Email", JOptionPane.WARNING_MESSAGE);
+                    } else if (password.isEmpty() || password.length() < 4) {
+                        JOptionPane.showMessageDialog(this, "Password must be at least 4 characters.", "Invalid Password", JOptionPane.WARNING_MESSAGE);
+                    } else {
+//                        Create Class include email and password to passing at Login method for Easy
+                        User LoginUser = User.create(email, password);
+
+                        boolean isLogged = UserService.Login(LoginUser.Email, LoginUser.Password);
+
+                        if (isLogged) {
+                            JOptionPane.showMessageDialog(this, " Logged in successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(this, " Invalid email or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+
+   
       
      
         
