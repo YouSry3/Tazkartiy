@@ -4,9 +4,18 @@ package View;
 import Controller.UserService;
 import Objects.User;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
 public class Login extends javax.swing.JFrame {
@@ -187,15 +196,11 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 129, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 149, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -230,10 +235,13 @@ public class Login extends javax.swing.JFrame {
 
                                     if (isLogged) {
             //                            Success Login User 
+                                            
                                             this.dispose();
-
-                                    } 
-                                    this.dispose();
+                                           CrudAppFrame LoginFrame = new CrudAppFrame();
+                                           
+                                          
+                                        } 
+                                    
 
                             }
                     }
@@ -256,9 +264,42 @@ public class Login extends javax.swing.JFrame {
         
     }
     public void  WelcomeUSer(String UserName){
-                JOptionPane.showMessageDialog(this, " \n Welcome "+UserName,"Login Success",JOptionPane.INFORMATION_MESSAGE);
-
+               
+        showCustomMessage(UserName);
         
+    }   public static void showCustomMessage(String userName) {
+        // نص الرسالة
+        String message = "Welcome " + userName;
+        String title = "Login Success";
+
+        // إعداد الألوان والتصميم
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(0, 153, 255));  // خلفية بلون أزرق جميل
+
+        // إعداد النصوص
+        JLabel label = new JLabel(message);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 24));  // خط جميل مع حجم كبير
+        label.setForeground(Color.WHITE);  // نص باللون الأبيض
+        label.setHorizontalAlignment(JLabel.CENTER);  // تموضع النص في المنتصف
+
+        // إضافة التأثيرات على الرسالة (تظليل أو تأثيرات)
+        label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));  // إضافة حدود للنص
+        label.setOpaque(true);  // تفعيل التعتيم لزيادة وضوح النص
+
+        // إضافة النص إلى اللوحة
+        panel.add(label);
+
+        // إنشاء نافذة مخصصة بدون زر OK
+        JDialog dialog = new JDialog();
+        dialog.setTitle(title);
+        dialog.setSize(400, 200);
+        dialog.setLocationRelativeTo(null); // تحديد مكان النافذة في وسط الشاشة
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // عند إغلاق النافذة تخرج بدون مشاكل
+        dialog.setModal(true);  // تحديد أن النافذة هي نافذة مميزة وتمنع التفاعل مع النوافذ الأخرى
+
+        // إضافة اللوحة إلى النافذة
+        dialog.add(panel);
+        dialog.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
